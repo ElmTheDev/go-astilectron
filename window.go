@@ -12,62 +12,59 @@ import (
 
 // Window event names
 const (
-	EventNameWebContentsEventLogin                    = "web.contents.event.login"
-	EventNameWebContentsEventLoginCallback            = "web.contents.event.login.callback"
-	EventNameWindowCmdBlur                            = "window.cmd.blur"
-	EventNameWindowCmdCenter                          = "window.cmd.center"
-	EventNameWindowCmdClose                           = "window.cmd.close"
-	EventNameWindowCmdCreate                          = "window.cmd.create"
-	EventNameWindowCmdDestroy                         = "window.cmd.destroy"
-	EventNameWindowCmdFocus                           = "window.cmd.focus"
-	EventNameWindowCmdHide                            = "window.cmd.hide"
-	EventNameWindowCmdLog                             = "window.cmd.log"
-	EventNameWindowCmdMaximize                        = "window.cmd.maximize"
-	eventNameWindowCmdMessage                         = "window.cmd.message"
-	eventNameWindowCmdMessageCallback                 = "window.cmd.message.callback"
-	EventNameWindowCmdMinimize                        = "window.cmd.minimize"
-	EventNameWindowCmdMove                            = "window.cmd.move"
-	EventNameWindowCmdResize                          = "window.cmd.resize"
-	EventNameWindowCmdSetBounds                       = "window.cmd.set.bounds"
-	EventNameWindowCmdRestore                         = "window.cmd.restore"
-	EventNameWindowCmdShow                            = "window.cmd.show"
-	EventNameWindowCmdUnmaximize                      = "window.cmd.unmaximize"
-	EventNameWindowCmdUpdateCustomOptions             = "window.cmd.update.custom.options"
-	EventNameWindowCmdWebContentsCloseDevTools        = "window.cmd.web.contents.close.dev.tools"
-	EventNameWindowCmdWebContentsOpenDevTools         = "window.cmd.web.contents.open.dev.tools"
-	EventNameWindowCmdWebContentsExecuteJavaScript    = "window.cmd.web.contents.execute.javascript"
-	EventNameWindowCmdWebContentsSetProxy             = "window.cmd.web.contents.set.proxy"
-	EventNameWindowCmdGetUrl                          = "window.cmd.get.url"
-	EventNameWindowCmdLoadURL                         = "window.cmd.load.url"
-	EventNameWindowEventBlur                          = "window.event.blur"
-	EventNameWindowEventClosed                        = "window.event.closed"
-	EventNameWindowEventDidFinishLoad                 = "window.event.did.finish.load"
-	EventNameWindowEventFocus                         = "window.event.focus"
-	EventNameWindowEventHide                          = "window.event.hide"
-	EventNameWindowEventMaximize                      = "window.event.maximize"
-	eventNameWindowEventMessage                       = "window.event.message"
-	eventNameWindowEventMessageCallback               = "window.event.message.callback"
-	EventNameWindowEventMinimize                      = "window.event.minimize"
-	EventNameWindowEventMove                          = "window.event.move"
-	EventNameWindowEventReadyToShow                   = "window.event.ready.to.show"
-	EventNameWindowEventResize                        = "window.event.resize"
-	EventNameWindowEventRestore                       = "window.event.restore"
-	EventNameWindowEventShow                          = "window.event.show"
-	EventNameWindowEventUnmaximize                    = "window.event.unmaximize"
-	EventNameWindowEventUnresponsive                  = "window.event.unresponsive"
-	EventNameWindowEventDidGetRedirectRequest         = "window.event.did.get.redirect.request"
-	EventNameWindowEventWebContentsExecutedJavaScript = "window.event.web.contents.executed.javascript"
-	EventNameWindowEventWebContentsSetProxy           = "window.event.web.contents.set.proxy"
-	EventNameWindowEventWillNavigate                  = "window.event.will.navigate"
-	EventNameWindowEventUpdatedCustomOptions          = "window.event.updated.custom.options"
-	EventNameWindowLoadedURL                          = "window.event.loaded.url"
-	EventNameWindowGetUrl                             = "window.event.get.url"
-	EventNameWindowCmdSetBrowserView                  = "window.cmd.set.browser.view"
-	EventNameWindowEventSetBrowserView                = "window.event.set.browser.view"
-	EventNameWindowCmdAddBrowserView                  = "window.cmd.add.browser.view"
-	EventNameWindowEventAddBrowserView                = "window.event.add.browser.view"
-	EventNameWindowCmdRemoveBrowserView               = "window.cmd.remove.browser.view"
-	EventNameWindowEventRemoveBrowserView             = "window.event.remove.browser.view"
+	EventNameWebContentsEventLogin                                    = "web.contents.event.login"
+	EventNameWebContentsEventLoginCallback                            = "web.contents.event.login.callback"
+	EventNameWebContentsEventSessionWebRequestOnBeforeRequest         = "web.contents.event.session.web.request.on.before.request"
+	EventNameWebContentsEventSessionWebRequestOnBeforeRequestCallback = "web.contents.event.session.web.request.on.before.request.callback"
+	EventNameWindowEventWebContentsOnBeforeRequest                    = "window.event.web.contents.on.before.request"
+	EventNameWindowCmdBlur                                            = "window.cmd.blur"
+	EventNameWindowCmdCenter                                          = "window.cmd.center"
+	EventNameWindowCmdClose                                           = "window.cmd.close"
+	EventNameWindowCmdCreate                                          = "window.cmd.create"
+	EventNameWindowCmdDestroy                                         = "window.cmd.destroy"
+	EventNameWindowCmdFocus                                           = "window.cmd.focus"
+	EventNameWindowCmdHide                                            = "window.cmd.hide"
+	EventNameWindowCmdLog                                             = "window.cmd.log"
+	EventNameWindowCmdMaximize                                        = "window.cmd.maximize"
+	eventNameWindowCmdMessage                                         = "window.cmd.message"
+	eventNameWindowCmdMessageCallback                                 = "window.cmd.message.callback"
+	EventNameWindowCmdMinimize                                        = "window.cmd.minimize"
+	EventNameWindowCmdMove                                            = "window.cmd.move"
+	EventNameWindowCmdResize                                          = "window.cmd.resize"
+	EventNameWindowCmdSetBounds                                       = "window.cmd.set.bounds"
+	EventNameWindowCmdRestore                                         = "window.cmd.restore"
+	EventNameWindowCmdShow                                            = "window.cmd.show"
+	EventNameWindowCmdUnmaximize                                      = "window.cmd.unmaximize"
+	EventNameWindowCmdUpdateCustomOptions                             = "window.cmd.update.custom.options"
+	EventNameWindowCmdWebContentsCloseDevTools                        = "window.cmd.web.contents.close.dev.tools"
+	EventNameWindowCmdWebContentsOpenDevTools                         = "window.cmd.web.contents.open.dev.tools"
+	EventNameWindowCmdWebContentsExecuteJavaScript                    = "window.cmd.web.contents.execute.javascript"
+	EventNameWindowCmdWebContentsSetProxy                             = "window.cmd.web.contents.set.proxy"
+	EventNameWindowCmdGetUrl                                          = "window.cmd.get.url"
+	EventNameWindowCmdLoadURL                                         = "window.cmd.load.url"
+	EventNameWindowEventBlur                                          = "window.event.blur"
+	EventNameWindowEventClosed                                        = "window.event.closed"
+	EventNameWindowEventDidFinishLoad                                 = "window.event.did.finish.load"
+	EventNameWindowEventFocus                                         = "window.event.focus"
+	EventNameWindowEventHide                                          = "window.event.hide"
+	EventNameWindowEventMaximize                                      = "window.event.maximize"
+	eventNameWindowEventMessage                                       = "window.event.message"
+	eventNameWindowEventMessageCallback                               = "window.event.message.callback"
+	EventNameWindowEventMinimize                                      = "window.event.minimize"
+	EventNameWindowEventMove                                          = "window.event.move"
+	EventNameWindowEventReadyToShow                                   = "window.event.ready.to.show"
+	EventNameWindowEventResize                                        = "window.event.resize"
+	EventNameWindowEventRestore                                       = "window.event.restore"
+	EventNameWindowEventShow                                          = "window.event.show"
+	EventNameWindowEventUnmaximize                                    = "window.event.unmaximize"
+	EventNameWindowEventUnresponsive                                  = "window.event.unresponsive"
+	EventNameWindowEventDidGetRedirectRequest                         = "window.event.did.get.redirect.request"
+	EventNameWindowEventWebContentsExecutedJavaScript                 = "window.event.web.contents.executed.javascript"
+	EventNameWindowEventWebContentsSetProxy                           = "window.event.web.contents.set.proxy"
+	EventNameWindowEventWillNavigate                                  = "window.event.will.navigate"
+	EventNameWindowEventUpdatedCustomOptions                          = "window.event.updated.custom.options"
+	EventNameWindowLoadedURL                                          = "window.event.loaded.url"
+	EventNameWindowGetUrl                                             = "window.event.get.url"
 )
 
 // Title bar styles
@@ -90,8 +87,6 @@ type Window struct {
 	onMessageOnce      sync.Once
 	Session            *Session
 	url                *stdUrl.URL
-	BrowserViews       map[string]*BrowserView
-	BVMutex            sync.RWMutex
 }
 
 // WindowOptions represents window options
@@ -196,23 +191,22 @@ type WebPreferences struct {
 	Images                      *bool                  `json:"images,omitempty"`
 	Javascript                  *bool                  `json:"javascript,omitempty"`
 	MinimumFontSize             *int                   `json:"minimumFontSize,omitempty"`
-	// This attribute needs to be true at all time for browserwindow
-	NodeIntegration         *bool   `json:"nodeIntegration,omitempty"`
-	NodeIntegrationInWorker *bool   `json:"nodeIntegrationInWorker,omitempty"`
-	Offscreen               *bool   `json:"offscreen,omitempty"`
-	Partition               *string `json:"partition,omitempty"`
-	Plugins                 *bool   `json:"plugins,omitempty"`
-	Preload                 *string `json:"preload,omitempty"`
-	Sandbox                 *bool   `json:"sandbox,omitempty"`
-	ScrollBounce            *bool   `json:"scrollBounce,omitempty"`
-	//id for the session being referenced
-	Session               *string  `json:"session,omitempty"`
-	TextAreasAreResizable *bool    `json:"textAreasAreResizable,omitempty"`
-	Webaudio              *bool    `json:"webaudio,omitempty"`
-	Webgl                 *bool    `json:"webgl,omitempty"`
-	WebSecurity           *bool    `json:"webSecurity,omitempty"`
-	WebviewTag            *bool    `json:"webviewTag,omitempty"`
-	ZoomFactor            *float64 `json:"zoomFactor,omitempty"`
+	// This attribute needs to be true at all time
+	// NodeIntegration             *bool                  `json:"nodeIntegration,omitempty"`
+	NodeIntegrationInWorker *bool                  `json:"nodeIntegrationInWorker,omitempty"`
+	Offscreen               *bool                  `json:"offscreen,omitempty"`
+	Partition               *string                `json:"partition,omitempty"`
+	Plugins                 *bool                  `json:"plugins,omitempty"`
+	Preload                 *string                `json:"preload,omitempty"`
+	Sandbox                 *bool                  `json:"sandbox,omitempty"`
+	ScrollBounce            *bool                  `json:"scrollBounce,omitempty"`
+	Session                 map[string]interface{} `json:"session,omitempty"`
+	TextAreasAreResizable   *bool                  `json:"textAreasAreResizable,omitempty"`
+	Webaudio                *bool                  `json:"webaudio,omitempty"`
+	Webgl                   *bool                  `json:"webgl,omitempty"`
+	WebSecurity             *bool                  `json:"webSecurity,omitempty"`
+	WebviewTag              *bool                  `json:"webviewTag,omitempty"`
+	ZoomFactor              *float64               `json:"zoomFactor,omitempty"`
 }
 
 // newWindow creates a new window
@@ -223,8 +217,6 @@ func newWindow(ctx context.Context, l astikit.SeverityLogger, o Options, p Paths
 		l:                  l,
 		o:                  wo,
 		object:             newObject(ctx, d, i, wrt, i.new()),
-		BrowserViews:       make(map[string]*BrowserView),
-		BVMutex:            sync.RWMutex{},
 	}
 	w.Session = newSession(w.ctx, d, i, wrt)
 
@@ -324,49 +316,6 @@ func (w *Window) Create() (err error) {
 		return
 	}
 	_, err = synchronousEvent(w.ctx, w, w.w, Event{Name: EventNameWindowCmdCreate, SessionID: w.Session.id, TargetID: w.id, URL: w.url.String(), WindowOptions: w.o}, EventNameWindowEventDidFinishLoad)
-	return
-}
-
-// SetBrowserView sets a browserview to a window
-func (w *Window) SetBrowserView(browserView *BrowserView) (err error) {
-	if err = w.ctx.Err(); err != nil {
-		return
-	}
-
-	w.BVMutex.Lock()
-	defer w.BVMutex.Unlock()
-
-	w.BrowserViews[browserView.id] = browserView
-
-	synchronousEvent(w.ctx, w, w.w, Event{Name: EventNameWindowCmdSetBrowserView, TargetID: w.id, BrowserViewID: browserView.id}, EventNameWindowEventSetBrowserView)
-	return
-}
-
-func (w *Window) AddBrowserView(browserView *BrowserView) (err error) {
-	if err = w.ctx.Err(); err != nil {
-		return
-	}
-
-	w.BVMutex.Lock()
-	defer w.BVMutex.Unlock()
-
-	w.BrowserViews[browserView.id] = browserView
-
-	synchronousEvent(w.ctx, w, w.w, Event{Name: EventNameWindowCmdAddBrowserView, TargetID: w.id, BrowserViewID: browserView.id}, EventNameWindowEventAddBrowserView)
-	return
-}
-
-func (w *Window) RemoveBrowserView(browserView *BrowserView) (err error) {
-	if err = w.ctx.Err(); err != nil {
-		return
-	}
-
-	w.BVMutex.Lock()
-	defer w.BVMutex.Unlock()
-
-	delete(w.BrowserViews, browserView.id)
-
-	synchronousEvent(w.ctx, w, w.w, Event{Name: EventNameWindowCmdRemoveBrowserView, TargetID: w.id, BrowserViewID: browserView.id}, EventNameWindowEventRemoveBrowserView)
 	return
 }
 

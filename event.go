@@ -20,59 +20,46 @@ type Event struct {
 	// This is a list of all possible payloads.
 	// A choice was made not to use interfaces since it's a pain in the ass asserting each an every payload afterwards
 	// We use pointers so that omitempty works
-	AcceptLanguages string            `json:"acceptLanguages,omitempty"`
-	AuthInfo        *EventAuthInfo    `json:"authInfo,omitempty"`
-	Badge           string            `json:"badge,omitempty"`
-	BounceType      string            `json:"bounceType,omitempty"`
-	Bounds          *RectangleOptions `json:"bounds,omitempty"`
-	BrowserViewID   string            `json:"browserViewID,omitempty"`
-	Cancel          *bool             `json:"cancel,omitempty"`
-	CallbackID      string            `json:"callbackId,omitempty"`
-	Color           string            `json:"color,omitempty"`
-	Code            string            `json:"code,omitempty"`
-	//todo: can only be a string now?
-	CodeResult string          `json:"codeResult,omitempty"`
-	Cookies    []SessionCookie `json:"cookies,omitempty"`
+	AuthInfo   *EventAuthInfo    `json:"authInfo,omitempty"`
+	Badge      string            `json:"badge,omitempty"`
+	BounceType string            `json:"bounceType,omitempty"`
+	Bounds     *RectangleOptions `json:"bounds,omitempty"`
+	Cancel     *bool             `json:"cancel,omitempty"`
+	CallbackID string            `json:"callbackId,omitempty"`
+	Code       string            `json:"code,omitempty"`
+	Cookies    []SessionCookie   `json:"cookies,omitempty"`
 	// https://www.electronjs.org/docs/api/structures/protocol-response
-	Data                  string                 `json:"data,omitempty"`
-	Displays              *EventDisplays         `json:"displays,omitempty"`
-	DialogOptions         *DialogOptions         `json:"dialogOptions,omitempty"`
-	FilePath              string                 `json:"filePath,omitempty"`
-	ID                    *int                   `json:"id,omitempty"`
-	Filter                *FilterOptions         `json:"filter,omitempty"`
-	Image                 string                 `json:"image,omitempty"`
-	Index                 *int                   `json:"index,omitempty"`
-	Menu                  *EventMenu             `json:"menu,omitempty"`
-	Load                  *Load                  `json:"load,omitempty"`
-	MenuItem              *EventMenuItem         `json:"menuItem,omitempty"`
-	MenuItemOptions       *MenuItemOptions       `json:"menuItemOptions,omitempty"`
-	MenuItemPosition      *int                   `json:"menuItemPosition,omitempty"`
-	MenuPopupOptions      *MenuPopupOptions      `json:"menuPopupOptions,omitempty"`
-	Message               *EventMessage          `json:"message,omitempty"`
-	MimeType              string                 `json:"mimeType,omitempty"`
-	NotificationOptions   *NotificationOptions   `json:"notificationOptions,omitempty"`
-	Password              string                 `json:"password,omitempty"`
-	Path                  string                 `json:"path,omitempty"`
-	Paths                 []string               `json:"paths,omitempty"`
-	Partition             string                 `json:"partition,omitempty"`
-	Proxy                 *WindowProxyOptions    `json:"proxy,omitempty"`
-	RedirectURL           string                 `json:"redirectURL,omitempty"`
-	Reply                 string                 `json:"reply,omitempty"`
-	ResizeOptions         *ResizeOptions         `json:"resizeOptions,omitempty"`
-	Request               *EventRequest          `json:"request,omitempty"`
-	Scheme                string                 `json:"scheme,omitempty"`
-	SecondInstance        *EventSecondInstance   `json:"secondInstance,omitempty"`
-	SessionID             string                 `json:"sessionId,omitempty"`
-	ShowOpenDialogOptions *ShowOpenDialogOptions `json:"showOpenDialogOptions,omitempty"`
-	Supported             *Supported             `json:"supported,omitempty"`
-	TrayOptions           *TrayOptions           `json:"trayOptions,omitempty"`
-	URL                   string                 `json:"url,omitempty"`
-	URLNew                string                 `json:"newUrl,omitempty"`
-	URLOld                string                 `json:"oldUrl,omitempty"`
-	UserAgent             string                 `json:"userAgent,omitempty"`
-	Username              string                 `json:"username,omitempty"`
-	WindowID              string                 `json:"windowId,omitempty"`
-	WindowOptions         *WindowOptions         `json:"windowOptions,omitempty"`
+	Data                string               `json:"data,omitempty"`
+	Displays            *EventDisplays       `json:"displays,omitempty"`
+	FilePath            string               `json:"filePath,omitempty"`
+	ID                  *int                 `json:"id,omitempty"`
+	Image               string               `json:"image,omitempty"`
+	Index               *int                 `json:"index,omitempty"`
+	Menu                *EventMenu           `json:"menu,omitempty"`
+	MenuItem            *EventMenuItem       `json:"menuItem,omitempty"`
+	MenuItemOptions     *MenuItemOptions     `json:"menuItemOptions,omitempty"`
+	MenuItemPosition    *int                 `json:"menuItemPosition,omitempty"`
+	MenuPopupOptions    *MenuPopupOptions    `json:"menuPopupOptions,omitempty"`
+	Message             *EventMessage        `json:"message,omitempty"`
+	MimeType            string               `json:"mimeType,omitempty"`
+	NotificationOptions *NotificationOptions `json:"notificationOptions,omitempty"`
+	Password            string               `json:"password,omitempty"`
+	Path                string               `json:"path,omitempty"`
+	Proxy               *WindowProxyOptions  `json:"proxy,omitempty"`
+	RedirectURL         string               `json:"redirectURL,omitempty"`
+	Reply               string               `json:"reply,omitempty"`
+	Request             *EventRequest        `json:"r,omitempty"`
+	Scheme              string               `json:"scheme,omitempty"`
+	SecondInstance      *EventSecondInstance `json:"secondInstance,omitempty"`
+	SessionID           string               `json:"sessionId,omitempty"`
+	Supported           *Supported           `json:"supported,omitempty"`
+	TrayOptions         *TrayOptions         `json:"trayOptions,omitempty"`
+	URL                 string               `json:"url,omitempty"`
+	URLNew              string               `json:"newUrl,omitempty"`
+	URLOld              string               `json:"oldUrl,omitempty"`
+	Username            string               `json:"username,omitempty"`
+	WindowID            string               `json:"windowId,omitempty"`
+	WindowOptions       *WindowOptions       `json:"windowOptions,omitempty"`
 }
 
 // EventAuthInfo represents an event auth info
@@ -88,10 +75,6 @@ type EventAuthInfo struct {
 type EventDisplays struct {
 	All     []*DisplayOptions `json:"all,omitempty"`
 	Primary *DisplayOptions   `json:"primary,omitempty"`
-}
-
-type FilterOptions struct {
-	Urls []string `json:"urls,omitempty"`
 }
 
 // EventMessage represents an event message
@@ -121,20 +104,6 @@ func (p *EventMessage) Unmarshal(i interface{}) error {
 func (p *EventMessage) UnmarshalJSON(i []byte) error {
 	p.i = i
 	return nil
-}
-
-type ResizeOptions struct {
-	Width      bool `json:"width,omitempty"`
-	Height     bool `json:"height,omitempty"`
-	Horizontal bool `json:"horizontal,omitempty"`
-	Vertical   bool `json:"vertical,omitempty"`
-}
-
-type Load struct {
-	HttpReferrer      string `json:"httpReferrer,omitempty"`
-	UserAgent         string `json:"userAgent,omitempty"`
-	ExtraHeaders      string `json:"extraHeaders,omitempty"`
-	BaseURLForDataURL string `json:"baseURLForDataURL,omitempty"`
 }
 
 // EventMenu represents an event menu

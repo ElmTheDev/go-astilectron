@@ -6,28 +6,17 @@ import (
 
 // Session event names
 const (
-	EventNameSessionCmdClearCache                          = "session.cmd.clear.cache"
-	EventNameSessionEventClearedCache                      = "session.event.cleared.cache"
-	EventNameSessionCmdFlushStorage                        = "session.cmd.flush.storage"
-	EventNameSessionEventFlushedStorage                    = "session.event.flushed.storage"
-	EventNameSessionCmdLoadExtension                       = "session.cmd.load.extension"
-	EventNameSessionEventLoadedExtension                   = "session.event.loaded.extension"
-	EventNameSessionEventWillDownload                      = "session.event.will.download"
-	EventNameSessionCmdSetCookies                          = "session.cmd.cookies.set"
-	EventNameSessionEventSetCookies                        = "session.event.cookies.set"
-	EventNameSessionCmdGetCookies                          = "session.cmd.cookies.get"
-	EventNameSessionEventGetCookies                        = "session.event.cookies.get"
-	EventNameSessionCmdFromPartition                       = "session.cmd.from.partition"
-	EventNameSessionEventFromPartition                     = "session.event.from.partition"
-	EventNameSessionCmdSetUserAgent                        = "session.cmd.set.user.agent"
-	EventNameSessionEventSetUserAgent                      = "session.event.set.user.agent"
-	EventNameSessionCmdCloseAllConnections                 = "session.cmd.close.all.connections"
-	EventNameSessionEventCloseAllConnections               = "session.event.close.all.connections"
-	EventNameSessionCmdSetProxy                            = "session.cmd.set.proxy"
-	EventNameSessionEventSetProxy                          = "session.event.set.proxy"
-	EventNameSessionCmdWebRequestOnBeforeRequest           = "session.cmd.web.request.on.before.request"
-	EventNameSessionEventWebRequestOnBeforeRequest         = "session.event.web.request.on.before.request"
-	EventNameSessionEventWebRequestOnBeforeRequestCallback = "session.event.web.request.on.before.request.callback"
+	EventNameSessionCmdClearCache        = "session.cmd.clear.cache"
+	EventNameSessionEventClearedCache    = "session.event.cleared.cache"
+	EventNameSessionCmdFlushStorage      = "session.cmd.flush.storage"
+	EventNameSessionEventFlushedStorage  = "session.event.flushed.storage"
+	EventNameSessionCmdLoadExtension     = "session.cmd.load.extension"
+	EventNameSessionEventLoadedExtension = "session.event.loaded.extension"
+	EventNameSessionEventWillDownload    = "session.event.will.download"
+	EventNameSessionCmdSetCookies        = "session.cmd.cookies.set"
+	EventNameSessionEventSetCookies      = "session.event.cookies.set"
+	EventNameSessionCmdGetCookies        = "session.cmd.cookies.get"
+	EventNameSessionEventGetCookies      = "session.event.cookies.get"
 )
 
 // Session represents a session
@@ -36,17 +25,12 @@ const (
 // https://github.com/electron/electron/blob/v1.8.1/docs/api/session.md
 type Session struct {
 	*object
-	ID string
+	*Protocol
 }
 
 // newSession creates a new session
 func newSession(ctx context.Context, d *dispatcher, i *identifier, w *writer) *Session {
-	id := i.new()
-	s := &Session{object: newObject(ctx, d, i, w, id)}
-
-	s.ID = id
-
-	return s
+	return &Session{object: newObject(ctx, d, i, w, i.new())}
 }
 
 // ClearCache clears the Session's HTTP cache
@@ -76,13 +60,13 @@ func (s *Session) LoadExtension(path string) (err error) {
 	return
 }
 
-func (s *Session) OnBeforeRequest(filter FilterOptions, fn func(i Event) (cancel bool, redirectUrl string, deleteListener bool)) (err error) {
+func (s *Session) OnBeforeRequest(fn func(i Event) (bool, string, bool)) (err error) {
 	// Setup the event to handle the callback
-	s.On(EventNameSessionEventWebRequestOnBeforeRequest, func(i Event) (deleteListener bool) {
+	s.On(EventNameWebContentsEventSessionWebRequestOnBeforeRequest, func(i Event) (deleteListener bool) {
 		cancel, redirectUrl, deleteListener := fn(i)
 
 		// Send message back
-		if err = s.w.write(Event{CallbackID: i.CallbackID, Name: EventNameSessionEventWebRequestOnBeforeRequestCallback, TargetID: s.id, Cancel: &cancel, RedirectURL: redirectUrl}); err != nil {
+		if err = s.w.write(Event{CallbackID: i.CallbackID, Name: EventNameWebContentsEventSessionWebRequestOnBeforeRequestCallback, TargetID: s.id, Cancel: &cancel, RedirectURL: redirectUrl}); err != nil {
 			return
 		}
 
@@ -92,8 +76,7 @@ func (s *Session) OnBeforeRequest(filter FilterOptions, fn func(i Event) (cancel
 	if err = s.ctx.Err(); err != nil {
 		return
 	}
-
-	s.w.write(Event{Name: EventNameSessionCmdWebRequestOnBeforeRequest, TargetID: s.id, Filter: &filter})
+	_, err = synchronousEvent(s.ctx, s, s.w, Event{Name: EventNameWebContentsEventSessionWebRequestOnBeforeRequest, TargetID: s.id}, EventNameWindowEventWebContentsOnBeforeRequest)
 	return
 }
 
@@ -123,41 +106,5 @@ func (s *Session) GetCookies() (e Event, err error) {
 		return
 	}
 	e, err = synchronousEvent(s.ctx, s, s.w, Event{Name: EventNameSessionCmdGetCookies, TargetID: s.id}, EventNameSessionEventGetCookies)
-	return
-}
-
-func (s *Session) FromPartition(partition string) (err error) {
-	if err = s.ctx.Err(); err != nil {
-		return
-	}
-
-	_, err = synchronousEvent(s.ctx, s, s.w, Event{Name: EventNameSessionCmdFromPartition, SessionID: s.id, Partition: partition}, EventNameSessionEventFromPartition)
-	return
-}
-
-func (s *Session) SetUserAgent(userAgent string, acceptLanguages string) (err error) {
-	if err = s.ctx.Err(); err != nil {
-		return
-	}
-
-	_, err = synchronousEvent(s.ctx, s, s.w, Event{Name: EventNameSessionCmdSetUserAgent, TargetID: s.id, UserAgent: userAgent, AcceptLanguages: acceptLanguages}, EventNameSessionEventSetUserAgent)
-	return
-}
-
-func (s *Session) CloseAllConnections() (err error) {
-	if err = s.ctx.Err(); err != nil {
-		return
-	}
-
-	_, err = synchronousEvent(s.ctx, s, s.w, Event{Name: EventNameSessionCmdCloseAllConnections, TargetID: s.id}, EventNameSessionEventCloseAllConnections)
-	return
-}
-
-func (s *Session) SetProxy(windowProxyOptions WindowProxyOptions) (err error) {
-	if err = s.ctx.Err(); err != nil {
-		return
-	}
-
-	_, err = synchronousEvent(s.ctx, s, s.w, Event{Name: EventNameSessionCmdSetProxy, TargetID: s.id, Proxy: &windowProxyOptions}, EventNameSessionEventSetProxy)
 	return
 }

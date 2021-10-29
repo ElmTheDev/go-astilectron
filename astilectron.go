@@ -419,15 +419,6 @@ func (a *Astilectron) NewWindow(url string, o *WindowOptions) (*Window, error) {
 	return newWindow(a.worker.Context(), a.l, a.options, a.Paths(), url, o, a.dispatcher, a.identifier, a.writer)
 }
 
-//New BrowserView creates a new browserview
-func (a *Astilectron) NewBrowserView(url string, o *WindowOptions, s *Session) (*BrowserView, error) {
-	return newBrowserView(a.worker.Context(), a.l, a.options, a.Paths(), url, o, s, a.dispatcher, a.identifier, a.writer)
-}
-
-func (a *Astilectron) NewSession() *Session {
-	return newSession(a.worker.Context(), a.dispatcher, a.identifier, a.writer)
-}
-
 // NewWindowInDisplay creates a new window in a specific display
 // This overrides the center attribute
 func (a *Astilectron) NewWindowInDisplay(d *Display, url string, o *WindowOptions) (*Window, error) {
@@ -447,11 +438,6 @@ func (a *Astilectron) NewWindowInDisplay(d *Display, url string, o *WindowOption
 // NewTray creates a new tray
 func (a *Astilectron) NewTray(o *TrayOptions) *Tray {
 	return newTray(a.worker.Context(), o, a.dispatcher, a.identifier, a.writer)
-}
-
-// NewDialog creates a new dialog
-func (a *Astilectron) NewDialog(o *DialogOptions) *Dialog {
-	return newDialog(a.worker.Context(), o, a.dispatcher, a.identifier, a.writer)
 }
 
 // NewNotification creates a new notification
