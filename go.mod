@@ -1,8 +1,9 @@
-module github.com/Nebulabots/go-astilectron
+module github.com/ElmTheDev/go-astilectron
 
-go 1.13
+go 1.16
 
 require (
-	github.com/asticode/go-astikit v0.15.0
-	github.com/stretchr/testify v1.4.0
+	github.com/Nebulabots/go-astilectron v0.26.1
+	github.com/asticode/go-astikit v0.21.1
+	github.com/stretchr/testify v1.7.0
 )
